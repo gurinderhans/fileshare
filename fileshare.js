@@ -46,15 +46,6 @@ if (Meteor.isClient) {
             return S3.collection.find();
         }
     })
-
-    Template.downloadFile.events({
-        'click .btn': function (event) {
-            // event.preventDefault();
-            
-            // var postContent = $('.postContent').val();
-            // Posts.insert({ postContent: postContent });
-        }
-    });
 }
 
 if (Meteor.isServer) {

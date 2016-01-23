@@ -4,6 +4,13 @@ html, body {
     height: 100%;
 }
 
+.logo {
+    text-align: center;
+    margin-top: 111px;
+} .logo img {
+    width: 300px;
+}
+
 .content-wrapper {
     padding: 0px 40px;
     padding-top: 30px;
@@ -15,14 +22,12 @@ html, body {
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     transition: all 0.3s;
+} .dropzone.dropnow {
+    border: 5px solid mediumspringgreen; 
+} .dropzone .hint {
+    color: #CCC;
 }
 
-.dropzone.dropnow {
-    border: 5px solid mediumspringgreen; 
-}
-.file_link {
-    /*width: 50%;*/
-}
 .file_link input {
     box-shadow: none;
     cursor: initial;
