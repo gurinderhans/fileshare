@@ -1,6 +1,16 @@
 // Collections
 var Files = new Mongo.Collection('files'); // stores all files with their respective links
 
+
+// Routes
+Router.route('/', function () {
+    this.render('filezone');
+});
+Router.route('/:_id', function () {
+    var file = Files.findOne({ _id: this.params._id });
+    this.render('downloadFile', { data: file });
+});
+
 if (Meteor.isClient) {
 
     Template.registerHelper('_', function () {
@@ -36,6 +46,15 @@ if (Meteor.isClient) {
             return S3.collection.find();
         }
     })
+
+    Template.downloadFile.events({
+        'click .btn': function (event) {
+            // event.preventDefault();
+            
+            // var postContent = $('.postContent').val();
+            // Posts.insert({ postContent: postContent });
+        }
+    });
 }
 
 if (Meteor.isServer) {

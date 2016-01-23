@@ -4,12 +4,11 @@
 </head>
 
 <body>
-    {{> filezone}}
 </body>
 
 <template name="filezone">
     {{#filedrop dropHandlers}}
-    <div class="container-fluid dropzone {{#if filedrop_over}}dropnow{{/if}}">
+    <div class="container-fluid content-wrapper dropzone {{#if filedrop_over}}dropnow{{/if}}">
         <div class="panel panel-success files_list">
             <div class="panel-heading">
                 <h3 class="panel-title">Files</h3>
@@ -29,16 +28,36 @@
         </div>
         <div class="panel-footer">
             {{#if url}}
-                <div class="input-group file_link">
-                    <input type="text" id="link-{{_id}}" class="form-control" value="http://file.share/{{_id}}" disabled>
-                    <span class="input-group-btn">
-                        <button class="btn" data-clipboard-target="#link-{{_id}}" type="button"><i class="glyphicon glyphicon-copy"></i></button>
+            <div class="input-group file_link">
+                <input type="text" id="link-{{_id}}" class="form-control" value="http://localhost:3000/{{_id}}" disabled>
+                <span class="input-group-btn">
+                        <a class="btn btn-success" data-clipboard-target="#link-{{_id}}"><i class="glyphicon glyphicon-copy"></i> Copy</a>
                     </span>
-                </div><!-- /input-group -->
+            </div>
+            <!-- /input-group -->
             {{else}}
-                <code>{{percent_uploaded}}% uploaded</code>
+            <p><code>{{percent_uploaded}}% uploaded</code></p>
             {{/if}}
+        </div>
+    </div>
+</template>
 
+
+<template name="downloadFile">
+    <div class="container-fluid content-wrapper">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{file.original_name}}<b> &middot; </b>{{file.size}}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="input-group file_link">
+                    <input type="text" class="form-control" value="http://localhost:3000/{{_id}}" disabled>
+                    <span class="input-group-btn">
+                        <a href="{{url}}" download="{{file.original_name}}" class="btn btn-primary"><i class="glyphicon glyphicon-download-alt"></i> Download</a>
+                    </span>
+                </div>
+                <!-- /input-group -->
+            </div>
         </div>
     </div>
 </template>
