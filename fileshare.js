@@ -28,11 +28,9 @@ if (Meteor.isClient) {
                         // upload `file` to S3
                         S3.upload({ files: files }, function (e, uploadedFile) {
                             if (e) {
-                                console.log(e);
-                                S3.collection.remove(uploadedFile)
+                                alert("Error uploading a file")
                             } else {
                                 new Clipboard('.btn');
-                                console.log(uploadedFile)
                                 uploadedFile.date = Date.now()
                                 Files.insert(uploadedFile)
                             }
