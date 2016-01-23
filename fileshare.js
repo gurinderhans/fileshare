@@ -28,7 +28,7 @@ if (Meteor.isClient) {
                         // upload `file` to S3
                         S3.upload({ files: files }, function (e, uploadedFile) {
                             if (e) {
-                                alert("Error uploading a file")
+                                alert("Error uploading a file, max allowed size is 10MB")
                             } else {
                                 new Clipboard('.btn');
                                 uploadedFile.date = Date.now()
