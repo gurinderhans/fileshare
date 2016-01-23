@@ -1,0 +1,44 @@
+<head>
+    <title>my fileshare</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    {{> filezone}}
+</body>
+
+<template name="filezone">
+    {{#filedrop dropHandlers}}
+    <div class="container-fluid dropzone {{#if filedrop_over}}dropnow{{/if}}">
+        <div class="panel panel-success files_list">
+            <div class="panel-heading">
+                <h3 class="panel-title">Files</h3>
+            </div>
+            <div class="panel-body">
+                {{#each files}} {{> file}} {{/each}}
+            </div>
+        </div>
+    </div>
+    {{/filedrop}}
+</template>
+
+<template name="file">
+    <div class="panel panel-success file">
+        <div class="panel-heading">
+            <h3 class="panel-title">{{file.original_name}}<b> &middot; </b>{{file.size}}</h3>
+        </div>
+        <div class="panel-footer">
+            {{#if url}}
+                <div class="input-group file_link">
+                    <input type="text" id="link-{{_id}}" class="form-control" value="http://file.share/{{_id}}" disabled>
+                    <span class="input-group-btn">
+                        <button class="btn" data-clipboard-target="#link-{{_id}}" type="button"><i class="glyphicon glyphicon-copy"></i></button>
+                    </span>
+                </div><!-- /input-group -->
+            {{else}}
+                <code>{{percent_uploaded}}% uploaded</code>
+            {{/if}}
+
+        </div>
+    </div>
+</template>
