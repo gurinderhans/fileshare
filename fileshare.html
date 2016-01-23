@@ -9,12 +9,9 @@
 <template name="filezone">
     {{#filedrop dropHandlers}}
     <div class="container-fluid content-wrapper dropzone {{#if filedrop_over}}dropnow{{/if}}">
-        <h1 class="logo"><a href="/"><img src="images/logo.png" alt="logo"></a></h1>
-        {{#if files.count}}
-        {{#each files}} {{> file}} {{/each}}
-        {{else}}
-        <h2 class="text-center hint well">Drop Files Here</h2>
-        {{/if}}
+        <div class="row text-center"><a class="logo" href="/"><img src="images/logo.png" alt="logo"></a></div>
+        {{#if files.count}} {{#each files}} {{> file}} {{/each}} {{else}}
+        <h2 class="text-center hint well">Drop Files Here</h2> {{/if}}
     </div>
     {{/filedrop}}
 </template>
@@ -42,7 +39,7 @@
 
 <template name="downloadFile">
     <div class="container-fluid content-wrapper">
-        <h1 class="logo"><a href="/"><img src="images/logo.png" alt="logo"></a></h1>
+        <div class="row text-center"><a class="logo" href="/"><img src="images/logo.png" alt="logo"></a></div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">{{file.original_name}}<b> &middot; </b>{{file.size}}</h3>
