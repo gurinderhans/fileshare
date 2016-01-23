@@ -4,9 +4,13 @@ var Files = new Mongo.Collection('files'); // stores all files with their respec
 
 // Routes
 Router.route('/', function () {
+    // track home page hit
+    mixpanel.track("hithomepage");
     this.render('filezone');
 });
 Router.route('/:_id', function () {
+    // track home page hit
+    mixpanel.track("hitsinglefilelink", { 'fileid': this.params._id });
     var file = Files.findOne({ _id: this.params._id });
     this.render('downloadFile', { data: file });
 });
@@ -32,7 +36,7 @@ if (Meteor.isClient) {
                             } else {
                                 new Clipboard('.btn');
                                 uploadedFile.date = Date.now()
-                                Files.insert(uploadedFile)
+                                Meteor.call("addFile", uploadedFile);
                             }
                         });
                     }
@@ -61,3 +65,9 @@ if (Meteor.isServer) {
         // code to run on server at startup
     });
 }
+
+Meteor.methods({
+    addFile: function (file) {
+        Files.insert(file);
+    },
+});

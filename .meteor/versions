@@ -34,7 +34,6 @@ html-tools@1.0.5
 htmljs@1.0.5
 http@1.1.1
 id-map@1.0.4
-insecure@1.0.4
 iron:controller@1.0.12
 iron:core@1.0.11
 iron:dynamic-template@1.0.12
@@ -82,4 +81,5 @@ underscore@1.0.4
 url@1.0.5
 webapp@1.2.3
 webapp-hashing@1.0.5
+yogiben:mixpanel@0.0.7
 zenorocha:clipboard@1.5.5
