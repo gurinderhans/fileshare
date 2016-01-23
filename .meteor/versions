@@ -28,6 +28,7 @@ ejson@1.0.7
 es5-shim@4.1.14
 fastclick@1.0.7
 geojson-utils@1.0.4
+gurinderhans:s3@0.0.1
 hot-code-push@1.0.0
 html-tools@1.0.5
 htmljs@1.0.5
@@ -44,7 +45,6 @@ iron:router@1.0.12
 iron:url@1.0.11
 jquery@1.11.4
 launch-screen@1.0.4
-lepozepo:s3@5.1.6
 less@2.5.1
 livedata@1.0.15
 localstorage@1.0.5

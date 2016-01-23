@@ -20,7 +20,7 @@ autopublish             # Publish all data to the clients (for prototyping)
 insecure                # Allow all DB writes from clients (for prototyping)
 twbs:bootstrap
 chfritz:filedrop
-lepozepo:s3
 zenorocha:clipboard
 iron:router
 less
+gurinderhans:s3

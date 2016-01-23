@@ -55,6 +55,7 @@ if (Meteor.isServer) {
             secret: Meteor.settings.AWS.AWSSecretAccessKey,
             bucket: Meteor.settings.AWS.AWSBucket,
             region: Meteor.settings.AWS.AWSRegion,
+            maxFileSize: Meteor.settings.AWS.MaxFileSize
         };
     }
 
