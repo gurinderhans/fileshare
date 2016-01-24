@@ -12,7 +12,12 @@ Router.route('/:_id', function () {
     // track home page hit
     mixpanel.track("hitsinglefilelink", { 'fileid': this.params._id });
     var file = Files.findOne({ _id: this.params._id });
-    this.render('downloadFile', { data: file });
+    if (file && file.file.name.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
+        console.log(file)
+        this.render('imageFile', { data: file });
+    } else {
+        this.render('downloadFile', { data: file });
+    }
 });
 
 if (Meteor.isClient) {
@@ -46,6 +51,12 @@ if (Meteor.isClient) {
 
         files: function () {
             return S3.collection.find();
+        }
+    })
+
+    Template.imageFile.helpers({
+        windowHeight: function () {
+            return window.innerHeight * 0.7;
         }
     })
 }
