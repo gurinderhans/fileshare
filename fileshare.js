@@ -12,11 +12,13 @@ Router.route('/:_id', function () {
     // track home page hit
     mixpanel.track("hitsinglefilelink", { 'fileid': this.params._id });
     var file = Files.findOne({ _id: this.params._id });
-    if (file && file.file.name.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
-        console.log(file)
-        this.render('imageFile', { data: file });
-    } else {
-        this.render('downloadFile', { data: file });
+    if (file) {
+        if (file.file.name.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
+            console.log(file)
+            this.render('imageFile', { data: file });
+        } else {
+            this.render('downloadFile', { data: file });
+        }
     }
 });
 
