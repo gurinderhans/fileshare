@@ -1,6 +1,5 @@
 <head>
     <title>my fileshare</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 
 <body>
@@ -9,7 +8,9 @@
 <template name="filezone">
     {{#filedrop dropHandlers}}
     <div class="container-fluid content-wrapper dropzone {{#if filedrop_over}}dropnow{{/if}}">
-        <div class="row text-center"><a class="logo" href="/"><img src="images/logo.png" alt="logo"></a></div>
+        <div class="row text-center">
+            <a class="logo" href="/"><img src="images/logo.png" alt="logo"></a>
+        </div>
         {{#if files.count}} {{#each files}} {{> file}} {{/each}} {{else}}
         <h2 class="text-center hint well">Drop Files Here</h2> {{/if}}
     </div>
@@ -39,12 +40,38 @@
 
 <template name="downloadFile">
     <div class="container-fluid content-wrapper">
-        <div class="row text-center"><a class="logo" href="/"><img src="images/logo.png" alt="logo"></a></div>
+        <div class="row text-center">
+            <a class="logo" href="/"><img src="images/logo.png" alt="logo"></a>
+        </div>
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h3 class="panel-title">{{file.original_name}}<b> &middot; </b>{{file.size}}</h3>
             </div>
             <div class="panel-body">
+                <div class="input-group file_link">
+                    <input type="text" class="form-control" value="http://fileit.pw/{{_id}}" disabled>
+                    <span class="input-group-btn">
+                        <a href="{{url}}" download="{{file.original_name}}" class="btn btn-success"><i class="glyphicon glyphicon-download-alt"></i> Download</a>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template name="imageFile">
+    <div class="container-fluid content-wrapper imagepage">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">{{file.original_name}}<b> &middot; </b>{{file.size}}</h3>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-12 col-md-12 img_wrapper">
+                        <img src="{{url}}" alt="{{file.original_name}}" style="max-height: {{windowHeight}}px" />
+                    </div>
+                </div>
+                <hr>
                 <div class="input-group file_link">
                     <input type="text" class="form-control" value="http://fileit.pw/{{_id}}" disabled>
                     <span class="input-group-btn">

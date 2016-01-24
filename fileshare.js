@@ -12,7 +12,12 @@ Router.route('/:_id', function () {
     // track home page hit
     mixpanel.track("hitsinglefilelink", { 'fileid': this.params._id });
     var file = Files.findOne({ _id: this.params._id });
-    this.render('downloadFile', { data: file });
+    if (file && file.file.type.indexOf("image") != -1) {
+        console.log(file)
+        this.render('imageFile', { data: file });
+    } else {
+        this.render('downloadFile', { data: file });
+    }
 });
 
 if (Meteor.isClient) {
@@ -30,7 +35,7 @@ if (Meteor.isClient) {
                 onDrop: function (files) {
                     if (files.length > 0) {
                         // upload `file` to S3
-                        S3.upload({ files: files }, function (e, uploadedFile) {
+                        S3.upload({ files: files, path: "dev" }, function (e, uploadedFile) {
                             if (e) {
                                 alert("Error uploading a file, max allowed size is 10MB")
                             } else {
@@ -46,6 +51,12 @@ if (Meteor.isClient) {
 
         files: function () {
             return S3.collection.find();
+        }
+    })
+
+    Template.imageFile.helpers({
+        windowHeight: function () {
+            return window.innerHeight * 0.7;
         }
     })
 }

@@ -8,6 +8,23 @@ html, body {
     }
 }
 
+.imagepage {
+    // .logo img {
+    //     width: 100px;
+    // }
+    
+    .panel-body {
+        .img_wrapper {
+            text-align: center;
+            
+            img {
+                width: auto;
+                max-width: 100%;
+            }
+        }
+    }
+}
+
 .content-wrapper {
     padding: 0px 40px;
     padding-top: 30px;
@@ -35,5 +52,8 @@ html, body {
 
 .file_link input {
     box-shadow: none;
-    cursor: initial;
+    
+    &[disabled] {
+        cursor: initial;
+    }
 }
