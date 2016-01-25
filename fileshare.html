@@ -13,9 +13,7 @@
             <a class="logo" href="/"><img src="images/logo.png" alt="logo"></a>
         </div>
         {{#if files.count}} {{#each files}} {{> s3file}} {{/each}} {{else}}
-        <h2 class="text-center hint well">
-            Click, Tap or Drop
-        </h2> {{/if}}
+        <h2 class="text-center well-text-color well">Click, Tap or Drop</h2> {{/if}}
     </label>
     {{/filedrop}}
 </template>
@@ -23,7 +21,7 @@
 <template name="s3file">
     <div class="panel panel-default file">
         <div class="panel-heading">
-            {{> file_header file}}
+            {{> fileheader file}}
         </div>
         <div class="panel-footer">
             {{#if url}}
@@ -40,14 +38,14 @@
     </div>
 </template>
 
-<template name="downloadFile">
+<template name="genericfile">
     <div class="container-fluid content-wrapper">
         <div class="row text-center">
             <a class="logo" href="/"><img src="images/logo.png" alt="logo"></a>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{> file_header file}}
+                {{> fileheader file}}
             </div>
             <div class="panel-body">
                 <div class="input-group file_link">
@@ -61,11 +59,11 @@
     </div>
 </template>
 
-<template name="imageFile">
+<template name="imagefile">
     <div class="container-fluid content-wrapper imagepage">
         <div class="panel panel-default">
             <div class="panel-heading">
-                {{> file_header file}}
+                {{> fileheader file}}
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -85,15 +83,15 @@
     </div>
 </template>
 
-<template name="file_header">
+<template name="fileheader">
     <h3 class="panel-title">{{original_name}}<b> &middot; </b>{{size}} bytes</h3>
 </template>
 
-<template name="file_loading">
+<template name="fileloading">
     <div class="container-fluid content-wrapper">
         <div class="row text-center">
             <a class="logo" href="/"><img src="images/logo.png" alt="logo"></a>
         </div>
-        <h3 class="well text-center">Loading...</h3>
+        <h3 class="well text-center well-text-color">Loading...</h3>
     </div>
 </template>

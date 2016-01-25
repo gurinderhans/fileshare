@@ -1,7 +1,6 @@
 // Collections
 var Files = new Mongo.Collection('files'); // stores all files with their respective links
 
-
 // Routes
 Router.route('/', function () {
     // track home page hit
@@ -12,24 +11,20 @@ Router.route('/:_id', function () {
     var file = Files.findOne({ _id: this.params._id });
     if (file) {
         if (file.file.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|svg)$/)) {
-            this.render('imageFile', { data: file });
+            this.render('imagefile', { data: file });
         } else {
-            this.render('downloadFile', { data: file });
+            this.render('genericfile', { data: file });
         }
         
         // track single file page link hit
         mixpanel.track("hitsinglefilelink", { 'fileid': this.params._id });
     } else {
         // show no file found
-        this.render('file_loading');
+        this.render('fileloading');
     }
 });
 
 if (Meteor.isClient) {
-
-    Template.registerHelper('_', function () {
-        return _
-    })
     
     /**
      * Helper function to upload files
@@ -42,7 +37,7 @@ if (Meteor.isClient) {
         // upload `files` to S3
         S3.upload({ files: files }, function (e, uploadedFile) {
             if (e) {
-                alert("Error uploading a file, max allowed size is 10MB")
+                alert("Error uploading a file, max allowed size is 100MB")
             } else {
                 new Clipboard('.btn');
                 uploadedFile.date = Date.now()
@@ -75,7 +70,7 @@ if (Meteor.isClient) {
         }
     })
 
-    Template.imageFile.helpers({
+    Template.imagefile.helpers({
         windowHeight: function () {
             return window.innerHeight * 0.7;
         }
@@ -89,7 +84,8 @@ if (Meteor.isServer) {
             secret: Meteor.settings.AWS.AWSSecretAccessKey,
             bucket: Meteor.settings.AWS.AWSBucket,
             region: Meteor.settings.AWS.AWSRegion,
-            maxFileSize: Meteor.settings.AWS.MaxFileSize
+            maxFileSize: Meteor.settings.AWS.MaxFileSize,
+            bucketRootPath: Meteor.settings.AWS.BucketRootPath
         };
     }
 }
