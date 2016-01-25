@@ -8,20 +8,25 @@ Router.route('/', function () {
     this.render('filezone');
 });
 Router.route('/:_id', function () {
-    var file = Files.findOne({ _id: this.params._id });
-    if (file) {
-        if (file.file.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|svg)$/)) {
-            this.render('imagefile', { data: file });
-        } else {
-            this.render('genericfile', { data: file });
-        }
+	var self = this;
+
+	Meteor.call('findFile', self.params._id, function (e, file) {
+		if (file) {
+			if (file.file.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|svg)$/)) {
+				self.render('imagefile', { data: file });
+			} else {
+				self.render('genericfile', { data: file });
+			}
         
-        // track single file page link hit
-        mixpanel.track("hitsinglefilelink", { 'fileid': this.params._id });
-    } else {
-        // show no file found
-        this.render('fileloading');
-    }
+			// track single file page link hit
+			mixpanel.track("hitsinglefilelink", { 'fileid': self.params._id });
+		} else {
+			// show no file found
+			self.render('fileinfo', { data: { info: "This file never was :/" } });
+		}
+	})
+
+	self.render('fileinfo', { data: { info: "Loading..." } });
 });
 
 if (Meteor.isClient) {
@@ -95,4 +100,9 @@ Meteor.methods({
     addFile: function (file) {
         Files.insert(file);
     },
+
+	findFile: function (id) {
+		var file = Files.findOne({ _id: id });
+		return file;
+	}
 });
