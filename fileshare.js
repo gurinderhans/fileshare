@@ -9,16 +9,19 @@ Router.route('/', function () {
     this.render('filezone');
 });
 Router.route('/:_id', function () {
-    // track home page hit
-    mixpanel.track("hitsinglefilelink", { 'fileid': this.params._id });
     var file = Files.findOne({ _id: this.params._id });
     if (file) {
-        if (file.file.name.match(/\.(jpg|jpeg|png|gif|svg)$/)) {
-            console.log(file)
+        if (file.file.name.toLowerCase().match(/\.(jpg|jpeg|png|gif|svg)$/)) {
             this.render('imageFile', { data: file });
         } else {
             this.render('downloadFile', { data: file });
         }
+        
+        // track single file page link hit
+        mixpanel.track("hitsinglefilelink", { 'fileid': this.params._id });
+    } else {
+        // show no file found
+        this.render('file_loading');
     }
 });
 
@@ -27,32 +30,48 @@ if (Meteor.isClient) {
     Template.registerHelper('_', function () {
         return _
     })
+    
+    /**
+     * Helper function to upload files
+     */
+    function uploadFiles(files) {
+        // file empty checks
+        if (!files || files.length == 0)
+            return;
+        
+        // upload `files` to S3
+        S3.upload({ files: files }, function (e, uploadedFile) {
+            if (e) {
+                alert("Error uploading a file, max allowed size is 10MB")
+            } else {
+                new Clipboard('.btn');
+                uploadedFile.date = Date.now()
+                Meteor.call("addFile", uploadedFile);
+            }
+        });
+    }
 
     Template.filezone.helpers({
         dropHandlers: function () {
             return {
-                onEnter: function (event) {
-                    // console.log("enter", event);
-                },
-                onDrop: function (files) {
-                    if (files.length > 0) {
-                        // upload `file` to S3
-                        S3.upload({ files: files }, function (e, uploadedFile) {
-                            if (e) {
-                                alert("Error uploading a file, max allowed size is 10MB")
-                            } else {
-                                new Clipboard('.btn');
-                                uploadedFile.date = Date.now()
-                                Meteor.call("addFile", uploadedFile);
-                            }
-                        });
-                    }
-                }
+                onEnter: function (event) { /**/ },
+                onDrop: uploadFiles
             };
         },
 
         files: function () {
             return S3.collection.find();
+        }
+    })
+
+    Template.filezone.events({
+        "change #file-picker": function (ev) {
+            uploadFiles($("#file-picker")[0].files);
+        },
+
+        "click .btn": function (ev) {
+            ev.preventDefault();
+            ev.stopPropogation();
         }
     })
 

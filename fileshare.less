@@ -5,7 +5,15 @@ html, body {
 .logo {
     img {
         width: 300px;
+        
+        @media (max-width: 600px) {
+            & { width: 200px; }
+        }
     }
+}
+
+#file-picker {
+    display: none;
 }
 
 .imagepage {
@@ -52,6 +60,7 @@ html, body {
 
 .file_link input {
     box-shadow: none;
+    font-weight: normal;
     
     &[disabled] {
         cursor: initial;

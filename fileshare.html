@@ -7,29 +7,31 @@
 </body>
 
 <template name="filezone">
-    {{#filedrop dropHandlers}}
-    <div class="container-fluid content-wrapper dropzone {{#if filedrop_over}}dropnow{{/if}}">
+    <input type="file" id="file-picker" multiple> {{#filedrop dropHandlers}}
+    <label for="file-picker" class="container-fluid content-wrapper dropzone {{#if filedrop_over}}dropnow{{/if}}">
         <div class="row text-center">
             <a class="logo" href="/"><img src="images/logo.png" alt="logo"></a>
         </div>
-        {{#if files.count}} {{#each files}} {{> file}} {{/each}} {{else}}
-        <h2 class="text-center hint well">Drop Files Here</h2> {{/if}}
-    </div>
+        {{#if files.count}} {{#each files}} {{> s3file}} {{/each}} {{else}}
+        <h2 class="text-center hint well">
+            Click, Tap or Drop
+        </h2> {{/if}}
+    </label>
     {{/filedrop}}
 </template>
 
-<template name="file">
+<template name="s3file">
     <div class="panel panel-default file">
         <div class="panel-heading">
-            <h3 class="panel-title">{{file.original_name}}<b> &middot; </b>{{file.size}}</h3>
+            {{> file_header file}}
         </div>
         <div class="panel-footer">
             {{#if url}}
             <div class="input-group file_link">
                 <input type="text" id="link-{{_id}}" class="form-control" value="http://fileit.pw/{{_id}}" disabled>
                 <span class="input-group-btn">
-                        <a class="btn btn-success" data-clipboard-target="#link-{{_id}}"><i class="glyphicon glyphicon-copy"></i> Copy</a>
-                    </span>
+                    <a class="btn btn-success" data-clipboard-target="#link-{{_id}}"><i class="glyphicon glyphicon-copy"></i> Copy</a>
+                </span>
             </div>
             {{else}}
             <p><code>{{percent_uploaded}}% uploaded</code></p>
@@ -38,7 +40,6 @@
     </div>
 </template>
 
-
 <template name="downloadFile">
     <div class="container-fluid content-wrapper">
         <div class="row text-center">
@@ -46,7 +47,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">{{file.original_name}}<b> &middot; </b>{{file.size}}</h3>
+                {{> file_header file}}
             </div>
             <div class="panel-body">
                 <div class="input-group file_link">
@@ -64,7 +65,7 @@
     <div class="container-fluid content-wrapper imagepage">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">{{file.original_name}}<b> &middot; </b>{{file.size}}</h3>
+                {{> file_header file}}
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -81,5 +82,18 @@
                 </div>
             </div>
         </div>
+    </div>
+</template>
+
+<template name="file_header">
+    <h3 class="panel-title">{{original_name}}<b> &middot; </b>{{size}} bytes</h3>
+</template>
+
+<template name="file_loading">
+    <div class="container-fluid content-wrapper">
+        <div class="row text-center">
+            <a class="logo" href="/"><img src="images/logo.png" alt="logo"></a>
+        </div>
+        <h3 class="well text-center">Loading...</h3>
     </div>
 </template>
