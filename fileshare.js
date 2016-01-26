@@ -42,6 +42,9 @@ if (Meteor.isClient) {
         if (!files || files.length == 0)
             return;
         
+		// send how many files uploading
+		mixpanel.track('uploadingfiles', { 'count': files.length })
+		
         // upload `files` to S3
         S3.upload({ files: files }, function (e, uploadedFile) {
             if (e) {
@@ -74,7 +77,9 @@ if (Meteor.isClient) {
 
         "click .btn": function (ev) {
             ev.preventDefault();
-            ev.stopPropogation();
+			
+			// send how many files uploading
+			mixpanel.track('copyfilelink')
         }
     })
 
