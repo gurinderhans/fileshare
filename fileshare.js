@@ -7,6 +7,9 @@ Router.route('/', function () {
     mixpanel.track("hithomepage");
     this.render('filezone');
 });
+Router.route('/about', function () {
+	this.render('aboutpage');
+});
 Router.route('/:_id', function () {
 	var self = this;
 
@@ -22,11 +25,11 @@ Router.route('/:_id', function () {
 			mixpanel.track("hitsinglefilelink", { 'fileid': self.params._id });
 		} else {
 			// show no file found
-			self.render('fileinfo', { data: { info: "This file never was :/" } });
+			self.render('infopage', { data: { info: "This file never was :/" } });
 		}
 	})
 
-	self.render('fileinfo', { data: { info: "Loading..." } });
+	self.render('infopage', { data: { info: "Loading..." } });
 });
 
 if (Meteor.isClient) {
@@ -77,7 +80,7 @@ if (Meteor.isClient) {
 
     Template.imagefile.helpers({
         windowHeight: function () {
-            return window.innerHeight * 0.7;
+            return window.innerHeight * 0.6666666;
         }
     })
 }
